@@ -1,0 +1,95 @@
+import random
+from tkinter import *
+
+import keyboard
+from PIL import Image, ImageTk
+import threading
+import time
+
+
+BIG_FONT = ("Arial", 30, "bold")
+
+
+# Setting up the user interface
+class TypingSpeedUI:
+    def __init__(self):
+        self.window = Tk()
+        self.window.title = "Typing Speed Tester"
+        self.window.geometry("1550x1000")
+        self.window.config(padx=80, pady=10, bg="#F5F5F5")
+
+        self.typed_text = Text(self.window, font=("Arial", 20, "normal"), bg="#F5F5F5", fg="#3E3E3E", width=50, highlightthickness=0, borderwidth=0, relief=GROOVE)
+        self.typed_text.grid(row=3, column=1, columnspan=4, padx=(40, 0), pady=(30, 0))
+        self.typed_text.bind("<KeyPress>", self.start)
+
+        self.current_time = Label(text="", width=5, font=("Arial", 20, "normal"),)
+        self.current_time.grid(row=0, column=0, columnspan=4,)
+
+        self.stop_loop = False
+        self.running = False
+        self.counter = 0
+        self.is_typing = False
+
+        self.window.mainloop()
+
+    def countdown(self, time_sec):
+        while time_sec > 0 and not self.stop_loop:
+            time_sec -= 1
+            if time_sec == 0:
+                self.typed_text.delete("1.0", "end")
+            mins, secs = divmod(time_sec, 60)
+            self.current_time.config(text=f"{secs:02d}")
+            self.window.update()
+            time.sleep(1)
+            self.running = True
+
+    def start(self, event):
+        if not self.running:
+            # For shift, alt and ctrl keys
+            if not event.keycode in [16, 17, 18]:
+                self.current_time.config(text="7")
+
+                # self.countdown(7)
+                self.running = True
+
+
+                # self.start(event)
+
+
+
+
+
+
+
+
+            if not event.keycode in [16, 17, 18]:
+                try:
+                    self.current_time.config(text="7")
+                    self.countdown(7)
+                except KeyboardInterrupt:
+                    self.start()
+
+
+
+
+
+
+
+
+
+
+ def start(self, event):
+        if not self.running:
+            # For shift, alt and ctrl keys
+            for alpha in ALPHABET:
+                while True:
+                    if keyboard.is_pressed(alpha) and not event.keycode in [16, 17, 18]:
+
+                        self.current_time.config(text="7")
+                    if not keyboard.is_pressed(alpha):
+                        self.current_time.config(text="7")
+                        # self.current_time.config(text="7")
+                        self.countdown(7)
+                    self.running = True
+
+
